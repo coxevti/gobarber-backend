@@ -6,6 +6,7 @@ import SessionController from './app/controllers/SessionController';
 import UserController from './app/controllers/UserController';
 import FileController from './app/controllers/FileController';
 import ProviderController from './app/controllers/ProviderController';
+import AppointmentController from './app/controllers/AppointmentController';
 
 import authMiddleware from './app/middlewares/authMiddleware';
 import multerConfig from './config/multer';
@@ -13,6 +14,7 @@ import multerConfig from './config/multer';
 import userStoreValidation from './app/validations/userStore';
 import userUpdateValidation from './app/validations/userUpdate';
 import sessionStoreValidation from './app/validations/sessionStore';
+import appointmentStoreValidation from './app/validations/appointmentStore';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -22,9 +24,14 @@ routes.post('/sessions', sessionStoreValidation, SessionController.store);
 
 routes.use(authMiddleware);
 
-routes.put('/users', userUpdateValidation, UserController.update);
-routes.post('/files', upload.single('file'), FileController.store);
 routes.get('/providers', ProviderController.index);
+routes.post(
+    '/appointments',
+    appointmentStoreValidation,
+    AppointmentController.store
+);
+routes.post('/files', upload.single('file'), FileController.store);
+routes.put('/users', userUpdateValidation, UserController.update);
 
 routes.use(
     '/files',
