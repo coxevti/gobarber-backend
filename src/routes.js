@@ -25,6 +25,7 @@ routes.post('/sessions', sessionStoreValidation, SessionController.store);
 routes.use(authMiddleware);
 
 routes.get('/providers', ProviderController.index);
+routes.get('/appointments', AppointmentController.index);
 routes.post(
     '/appointments',
     appointmentStoreValidation,
