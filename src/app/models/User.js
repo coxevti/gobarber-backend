@@ -21,6 +21,11 @@ class User extends Model {
                 );
             }
         });
+        return this;
+    }
+
+    static associate(models) {
+        this.belongsTo(models.File, { foreignKey: 'avatar_id' });
     }
 
     checkPassword(password) {
