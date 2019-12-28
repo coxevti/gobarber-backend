@@ -8,6 +8,7 @@ class App {
         this.serve = express();
         this.middleware();
         this.routes();
+        this.errorHandler();
     }
 
     middleware() {
@@ -16,6 +17,12 @@ class App {
 
     routes() {
         this.serve.use(routes);
+    }
+
+    errorHandler() {
+        this.serve.use((err, req, res, next) =>
+            res.status(err.status || 500).json({ message: err.error })
+        );
     }
 }
 
