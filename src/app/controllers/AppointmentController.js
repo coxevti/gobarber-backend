@@ -1,8 +1,10 @@
-import { startOfHour, parseISO, isBefore } from 'date-fns';
+import { startOfHour, parseISO, isBefore, format } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
 
 import User from '../models/User';
 import File from '../models/File';
 import Appointment from '../models/Appointment';
+import Notification from '../mongodb/schemas/Notification';
 
 class AppointmentController {
     async index(req, res) {
@@ -62,6 +64,18 @@ class AppointmentController {
                 message: 'Appoinment date is not available',
             });
         }
+        const user = await User.findByPk(req.userId);
+        const formatDate = format(
+            startHour,
+            "'dia' dd 'de' MMMM', às ' HH:mm'h'",
+            {
+                locale: ptBR,
+            }
+        );
+        await Notification.create({
+            user: provider_id,
+            content: `Novo agendamento de ${user.name} para ${formatDate}`,
+        });
         const appointment = await Appointment.create({
             user_id: req.userId,
             provider_id,
