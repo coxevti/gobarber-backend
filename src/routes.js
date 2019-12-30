@@ -37,6 +37,7 @@ routes.post(
 );
 routes.post('/files', upload.single('file'), FileController.store);
 routes.put('/users', userUpdateValidation, UserController.update);
+routes.put('/notifications/:id', NotificationController.update);
 
 routes.use(
     '/files',
