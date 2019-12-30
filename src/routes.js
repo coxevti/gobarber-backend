@@ -8,6 +8,7 @@ import FileController from './app/controllers/FileController';
 import ProviderController from './app/controllers/ProviderController';
 import AppointmentController from './app/controllers/AppointmentController';
 import ScheduleController from './app/controllers/ScheduleController';
+import NotificationController from './app/controllers/NotificationController';
 
 import authMiddleware from './app/middlewares/authMiddleware';
 import multerConfig from './config/multer';
@@ -28,6 +29,7 @@ routes.use(authMiddleware);
 routes.get('/providers', ProviderController.index);
 routes.get('/appointments', AppointmentController.index);
 routes.get('/schedule', ScheduleController.index);
+routes.get('/notifications', NotificationController.index);
 routes.post(
     '/appointments',
     appointmentStoreValidation,
