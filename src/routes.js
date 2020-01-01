@@ -9,6 +9,7 @@ import ProviderController from './app/controllers/ProviderController';
 import AppointmentController from './app/controllers/AppointmentController';
 import ScheduleController from './app/controllers/ScheduleController';
 import NotificationController from './app/controllers/NotificationController';
+import AvailableController from './app/controllers/AvailableController';
 
 import authMiddleware from './app/middlewares/authMiddleware';
 import multerConfig from './config/multer';
@@ -17,6 +18,7 @@ import userStoreValidation from './app/validations/userStore';
 import userUpdateValidation from './app/validations/userUpdate';
 import sessionStoreValidation from './app/validations/sessionStore';
 import appointmentStoreValidation from './app/validations/appointmentStore';
+import availableIndexValidation from './app/validations/availableIndex';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -30,6 +32,11 @@ routes.get('/providers', ProviderController.index);
 routes.get('/appointments', AppointmentController.index);
 routes.get('/schedule', ScheduleController.index);
 routes.get('/notifications', NotificationController.index);
+routes.get(
+    '/appointment/:providerId/available',
+    availableIndexValidation,
+    AvailableController.index
+);
 routes.post(
     '/appointments',
     appointmentStoreValidation,

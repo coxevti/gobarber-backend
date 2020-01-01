@@ -2,11 +2,10 @@ import * as Yup from 'yup';
 
 export default async (req, res, next) => {
     const schema = Yup.object().shape({
-        provider_id: Yup.number().required(),
-        date: Yup.date().required(),
+        date: Yup.number().required(),
     });
     try {
-        await schema.validate(req.body, { abortEarly: false });
+        await schema.validate(req.query, { abortEarly: true });
         return next();
     } catch (error) {
         return res
