@@ -26,6 +26,11 @@ const upload = multer(multerConfig);
 routes.post('/users', userStoreValidation, UserController.store);
 routes.post('/sessions', sessionStoreValidation, SessionController.store);
 
+routes.use(
+    '/files',
+    express.static(resolve(__dirname, '..', 'tmp', 'uploads'))
+);
+
 routes.use(authMiddleware);
 
 routes.get('/providers', ProviderController.index);
@@ -46,10 +51,5 @@ routes.post('/files', upload.single('file'), FileController.store);
 routes.put('/users', userUpdateValidation, UserController.update);
 routes.put('/notifications/:id', NotificationController.update);
 routes.delete('/appointments/:id', AppointmentController.delete);
-
-routes.use(
-    '/files',
-    express.static(resolve(__dirname, '..', 'tmp', 'uploads'))
-);
 
 export default routes;
